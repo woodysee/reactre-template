@@ -1,0 +1,1 @@
+ReactDOMRe.renderToElementWithId(<Component1 title="Todos" />, "root");
