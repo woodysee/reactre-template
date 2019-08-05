@@ -1,46 +1,37 @@
-// let rec len = (myList: list('a)) =>
-//   switch (myList) {
-//   | [] => 0
-//   | [_, ...tail] => 1 + len(tail)
-//   };
+type todo = {
+  text: string,
+  isDone: bool,
+};
 
-/* You're familiar handleClick from ReactJS. This mandatorily takes the payload,
-   then the `self` record, which contains state (none here), `handle`, `reduce`
-   and other utilities */
-let handleClick = _event => Js.log("clicked!");
-
-/* `make` is the function that mandatorily takes `children` (if you want to use
-   `JSX). `message` is a named argument, which simulates ReactJS props. Usage:
-
-   `<Component1 message="hello" />`
-
-   Which desugars to
-
-   `React.createElement(
-     Component1.make,
-     Component1.makeProps(~message="hello", ())
-   )` */
-
-// let renderTodos = (~todos: array(string)) => {
-//   let length: int = Array.length(todos);
-//   let todoEls: array(React.element) = [||];
-//   for (i in 0 to length) {
-//     let todoEl: array(React.element) = [|
-//       <li> {ReasonReact.string(todos[i])} </li>,
-//     |];
-//     let todoEls = Array.append(todoEls, todoEl);
-//     ();
-//   };
-//   todoEls;
-// };
+let initialTodos: array(todo) = [|
+  {text: "Wash clothes", isDone: true},
+  {text: "Buy dinner", isDone: false},
+  {text: "Learn ReasonReact", isDone: false},
+|];
 
 [@react.component]
 let make = (~title) => {
-  let list: array(string) = [|"hello world", "hello world2"|];
-  let renderTodo = (todo: string) => {
-    <li> {ReasonReact.string(todo)} </li>;
+  let (todos, setTodos) = React.useState(() => initialTodos);
+  let toggleTaskCompletion = (key, ~currTodo) => {
+    Js.log(string_of_int(key) ++ string_of_bool(currTodo.isDone));
+    setTodos(prevTodos => {
+      let updatedTodos = Array.copy(prevTodos);
+      updatedTodos[key] = {...currTodo, isDone: !currTodo.isDone};
+      updatedTodos;
+    });
   };
-  let renderedTodos = Array.map(renderTodo, list);
+
+  let renderTodo = (key: int, {text, isDone}: todo) => {
+    let toggleCheckbox = _event =>
+      toggleTaskCompletion(key, ~currTodo={text, isDone});
+    let todoId = string_of_int(key);
+    <li key=todoId>
+      <input type_="checkbox" checked=isDone onChange=toggleCheckbox />
+      {ReasonReact.string(text)}
+    </li>;
+  };
+  let renderedTodos =
+    Array.mapi((i, renderedTodo) => renderTodo(i, renderedTodo), todos);
   <section>
     <h1> {ReasonReact.string(title)} </h1>
     <ul className="todo-list"> {ReasonReact.array(renderedTodos)} </ul>
