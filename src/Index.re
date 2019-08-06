@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<Component1 title="Todos" />, "root");
+ReactDOMRe.renderToElementWithId(<TodoList title="Todos" />, "root");

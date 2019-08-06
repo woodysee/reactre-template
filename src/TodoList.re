@@ -13,7 +13,6 @@ let initialTodos: array(todo) = [|
 let make = (~title) => {
   let (todos, setTodos) = React.useState(() => initialTodos);
   let toggleTaskCompletion = (key, ~currTodo) => {
-    Js.log(string_of_int(key) ++ string_of_bool(currTodo.isDone));
     setTodos(prevTodos => {
       let updatedTodos = Array.copy(prevTodos);
       updatedTodos[key] = {...currTodo, isDone: !currTodo.isDone};
