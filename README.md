@@ -43,7 +43,7 @@ If you make use of routing (via `ReasonReact.Router` or similar logic) ensure th
 
 ### My first encounter with OCaml
 
-I don't originally have OCaml set up so I had to get everything sorted out first.
+If you don't originally have OCaml set up, follow these steps:
 
 - Install [`opam`](https://opam.ocaml.org/doc/Install.html#Using-your-distribution-39-s-package-system), which is the package manager for OCaml via your system's package manager (e.g. Homebrew).
 - Run `opam install merlin`. Merlin is required if you want to use `reason-vscode` in Visual Studio Code.
@@ -52,4 +52,6 @@ I don't originally have OCaml set up so I had to get everything sorted out first
 
 ### Creating a new component
 
-Components seem to be created by creating a new `.re` file in pascal case. There seems to be no way to set up how the app imports the components manually.
+Components seem to be created by creating a new `.re` file in pascal case. There seems to be no way to set up how the app imports the components manually as it seems to be enforced by BuckleScript [Build System / Configuration](https://bucklescript.github.io/docs/en/build-configuration#docsNav):
+
+> We don't do folder-level namespacing for your own project; all your own file names must be unique. This is a constraint that enables several features such as fast search and easier project reorganization.
