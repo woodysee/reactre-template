@@ -72,16 +72,16 @@ is then always encapsulated within the `{j| |j}` set of tags.
 
 ```reasonml
 let interpolationVar = "string interpolation";
-Js.log({j|這是 $interpolationVar! 👍|j}); // "這是string interpolation"
+Js.log({j|這是 $interpolationVar! 👍|j}); // "這是string interpolation!"
 Js.log({j|這是 $(interpolationVar) 👍|j}); // "這是string interpolation"
 ```
 
-- `{j| |j}` set of tags will handle Unicode characters.
+- `{js| |js}` set of tags will handle Unicode characters.
 
 ```reasonml
 let interpolationVar = "string interpolation";
-Js.log({js|這是$interpolationVar! 👎|js}); // "這是$interpolationVar"
-Js.log({js|這是$(interpolationVar)! 👎|js}); // "這是$(interpolationVar)"
+Js.log({js|這是$interpolationVar! 👎|js}); // "這是$interpolationVar!"
+Js.log({js|這是$(interpolationVar)! 👎|js}); // "這是$(interpolationVar)!"
 ```
 
 - `{||}` set of tags will not handle both.
