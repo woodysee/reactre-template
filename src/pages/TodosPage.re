@@ -31,6 +31,7 @@ let make = (~title) => {
   };
   let renderedTodos =
     Array.mapi((i, renderedTodo) => renderTodo(i, renderedTodo), todos);
+
   <section>
     <h1> {ReasonReact.string(title)} </h1>
     <ul className="todo-list"> {ReasonReact.array(renderedTodos)} </ul>
