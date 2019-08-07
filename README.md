@@ -55,3 +55,42 @@ If you don't originally have OCaml set up, follow these steps:
 Components seem to be created by creating a new `.re` file in pascal case. There seems to be no way to set up how the app imports the components manually as it seems to be enforced by BuckleScript [Build System / Configuration](https://bucklescript.github.io/docs/en/build-configuration#docsNav):
 
 > We don't do folder-level namespacing for your own project; all your own file names must be unique. This is a constraint that enables several features such as fast search and easier project reorganization.
+
+### String interpolation
+
+In JavaScript, string interpolation can be done like:
+
+```js
+const interpolationVar = "string interpolation";
+console.log(`This is ${interpolationVar}`); // This is string interpolation
+```
+
+In ReasonML:
+
+- to show interpolation variables, encapsulate them in `$(var)` or `$var` which
+is then always encapsulated within the `{j| |j}` set of tags.
+
+```reasonml
+let interpolationVar = "string interpolation";
+Js.log({j|這是 $interpolationVar! 👍|j}); // "這是string interpolation"
+Js.log({j|這是 $(interpolationVar) 👍|j}); // "這是string interpolation"
+```
+
+- `{j| |j}` set of tags will handle Unicode characters.
+
+```reasonml
+let interpolationVar = "string interpolation";
+Js.log({js|這是$interpolationVar! 👎|js}); // "這是$interpolationVar"
+Js.log({js|這是$(interpolationVar)! 👎|js}); // "這是$(interpolationVar)"
+```
+
+- `{||}` set of tags will not handle both.
+
+```reasonml
+let interpolationVar = "string interpolation";
+Js.log({|這是$interpolationVar! 👎|}); // "éæ¯$interpolationVar! ð"
+```
+
+Try it [here](https://reasonml.github.io/en/try.html?rrjsx=true&reason=DYUwLgBAlgdmICcAOB7YBDMUUwGroQgF4IAiAZzAVgHNo5FUMsdSBuAKAClyA6YFDQAUAbwBWAH0CYCYHozCABJY8ZGkzY8BAIQRAvBuBZHYliAvgEpOPfoNGTZCoUsaqWGhCd0HjZ7nwHDx5aRlFBhVmdXwEbR1AOR3DclNzHyt-QPl7EKY1HAiTKNixeK8LX1FUh1CslzyJBKA).
+
+Read more about [quoted strings in String and Char types](https://reasonml.github.io/docs/en/string-and-char#quoted-string).
